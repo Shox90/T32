@@ -129,14 +129,18 @@ def re_stock():
     for shoe in shoes_to_restock:
         add = input(f"Do you want to add quantity to {shoe.product}? (yes/no) ")
         if add.lower() == "yes":
-            new_quantity = int(input("Enter new quantity: "))
-            # increment on top of existing stock
-            shoe.quantity += new_quantity
+            try:
+                new_quantity = int(input("Enter new quantity: "))
+                # increment on top of existing stock
+                shoe.quantity += new_quantity
 
-            with open("inventory.txt", "w") as file:
-                for s in shoe_list:
-                    file.write(f"{s.country},{s.code},{s.product},{s.cost},{s.quantity}\n")
-            print("Inventory updated.")
+                with open("inventory.txt", "w") as file:
+                    for s in shoe_list:
+                        file.write(f"{s.country},{s.code},{s.product},{s.cost},{s.quantity}\n")
+                print("Inventory updated.")
+            except ValueError:
+                print("Please enter a number to restock.")
+                continue
         else:
             print("No shoes in the inventory.")
 
